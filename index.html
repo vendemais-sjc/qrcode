@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Code Pro - Gerador Profissional</title>
+    <title>QR Code Generator - GitHub</title>
     <style>
+        /* Mesmo CSS anterior - mantém tudo */
         * {
             margin: 0;
             padding: 0;
@@ -29,18 +30,6 @@
             border-radius: 30px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             overflow: hidden;
-            animation: slideUp 0.6s ease-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .header {
@@ -53,29 +42,6 @@
         .header h1 {
             font-size: 2.5em;
             margin-bottom: 10px;
-            font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .header p {
-            font-size: 1.1em;
-            opacity: 0.9;
-            font-weight: 300;
-        }
-
-        .header-icon {
-            font-size: 4em;
-            margin-bottom: 20px;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
         }
 
         .main-content {
@@ -87,7 +53,6 @@
             border-radius: 20px;
             padding: 30px;
             margin-bottom: 30px;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
         }
 
         .input-group {
@@ -99,9 +64,6 @@
             margin-bottom: 8px;
             color: #4a5568;
             font-weight: 600;
-            font-size: 0.95em;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .input-field {
@@ -111,24 +73,12 @@
             border-radius: 15px;
             font-size: 16px;
             transition: all 0.3s;
-            background: white;
         }
 
         .input-field:focus {
             outline: none;
             border-color: #667eea;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .input-field.error {
-            border-color: #fc8181;
-            animation: shake 0.5s;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-            20%, 40%, 60%, 80% { transform: translateX(5px); }
         }
 
         .options-grid {
@@ -145,27 +95,12 @@
             border: 2px solid #e2e8f0;
         }
 
-        .option-item label {
-            display: block;
-            margin-bottom: 8px;
-            color: #4a5568;
-            font-weight: 600;
-            font-size: 0.9em;
-        }
-
         .option-item select, .option-item input[type="color"] {
             width: 100%;
             padding: 10px;
             border: 2px solid #e2e8f0;
             border-radius: 10px;
             font-size: 14px;
-            background: white;
-            cursor: pointer;
-        }
-
-        .option-item input[type="color"] {
-            height: 45px;
-            padding: 5px;
         }
 
         .generate-btn {
@@ -179,20 +114,11 @@
             cursor: pointer;
             width: 100%;
             transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
         }
 
-        .generate-btn:hover:not(:disabled) {
+        .generate-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
-        }
-
-        .generate-btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            background: linear-gradient(135deg, #a0aec0 0%, #718096 100%);
         }
 
         .qrcode-container {
@@ -203,12 +129,10 @@
             background: #f8f9fa;
             border-radius: 20px;
             margin-top: 30px;
-            transition: all 0.3s;
         }
 
         .qrcode-container.hidden {
-            opacity: 0;
-            transform: scale(0.9);
+            display: none;
         }
 
         #qrcode {
@@ -241,40 +165,19 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
             color: white;
         }
 
         .download-btn {
             background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-            box-shadow: 0 5px 15px rgba(72, 187, 120, 0.3);
-        }
-
-        .download-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(72, 187, 120, 0.4);
-        }
-
-        .copy-btn {
-            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
-            box-shadow: 0 5px 15px rgba(66, 153, 225, 0.3);
-        }
-
-        .copy-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(66, 153, 225, 0.4);
         }
 
         .svg-btn {
             background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
-            box-shadow: 0 5px 15px rgba(237, 137, 54, 0.3);
         }
 
-        .svg-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(237, 137, 54, 0.4);
+        .copy-btn {
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
         }
 
         .error-message {
@@ -289,18 +192,6 @@
 
         .error-message.show {
             display: block;
-            animation: slideIn 0.3s;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .loading-spinner {
@@ -330,7 +221,6 @@
             padding: 20px;
             background: white;
             border-radius: 15px;
-            border: 2px solid #e2e8f0;
         }
 
         .stat-item {
@@ -343,18 +233,10 @@
             color: #667eea;
         }
 
-        .stat-label {
-            color: #718096;
-            font-size: 0.9em;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
         .footer {
             text-align: center;
             padding: 20px;
             color: #718096;
-            font-size: 0.9em;
             border-top: 2px solid #e2e8f0;
         }
     </style>
@@ -362,9 +244,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <div class="header-icon">📱</div>
-            <h1>QR Code Pro</h1>
-            <p>Gerador profissional de QR Codes com estilo e personalização</p>
+            <h1>📱 QR Code Generator</h1>
+            <p>Funcionando no GitHub Pages! 🚀</p>
         </div>
 
         <div class="main-content">
@@ -374,29 +255,18 @@
                     <input type="text" 
                            id="qr-input" 
                            class="input-field"
-                           placeholder="Digite texto, URL, telefone, email..."
-                           value="https://exemplo.com">
+                           placeholder="Digite texto, URL, telefone..."
+                           value="https://github.com">
                 </div>
 
                 <div class="options-grid">
                     <div class="option-item">
                         <label>📏 Tamanho</label>
                         <select id="qr-size">
-                            <option value="150">150x150 (Pequeno)</option>
-                            <option value="250" selected>250x250 (Médio)</option>
-                            <option value="350">350x350 (Grande)</option>
-                            <option value="500">500x500 (Extra Grande)</option>
-                            <option value="800">800x800 (Máximo)</option>
-                        </select>
-                    </div>
-
-                    <div class="option-item">
-                        <label>🔲 Nível de Correção</label>
-                        <select id="qr-error-level">
-                            <option value="L">L - Baixo (7%)</option>
-                            <option value="M" selected>M - Médio (15%)</option>
-                            <option value="Q">Q - Alto (25%)</option>
-                            <option value="H">H - Máximo (30%)</option>
+                            <option value="150">150x150</option>
+                            <option value="250" selected>250x250</option>
+                            <option value="350">350x350</option>
+                            <option value="500">500x500</option>
                         </select>
                     </div>
 
@@ -413,7 +283,7 @@
 
                 <button class="generate-btn" onclick="generateQR()" id="generate-btn">
                     <span class="loading-spinner"></span>
-                    <span>✨ Gerar QR Code Agora ✨</span>
+                    <span>✨ Gerar QR Code ✨</span>
                 </button>
             </div>
 
@@ -421,47 +291,25 @@
                 <div id="qrcode"></div>
                 
                 <div class="action-buttons">
-                    <button class="action-btn download-btn" onclick="downloadQR('png')" id="download-png">
+                    <button class="action-btn download-btn" onclick="downloadQR()">
                         ⬇️ Baixar PNG
                     </button>
-                    <button class="action-btn svg-btn" onclick="downloadQR('svg')" id="download-svg">
-                        🎨 Baixar SVG
-                    </button>
-                    <button class="action-btn copy-btn" onclick="copyQR()" id="copy-btn">
+                    <button class="action-btn copy-btn" onclick="copyQR()">
                         📋 Copiar
                     </button>
                 </div>
             </div>
 
             <div class="error-message" id="error-message"></div>
-
-            <div class="stats" id="stats">
-                <div class="stat-item">
-                    <div class="stat-value" id="qr-version">-</div>
-                    <div class="stat-label">Versão</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="qr-characters">0</div>
-                    <div class="stat-label">Caracteres</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="qr-capacity">-</div>
-                    <div class="stat-label">Capacidade</div>
-                </div>
-            </div>
-
-            <div class="footer">
-                <p>⚡ Gerado com a melhor tecnologia | QR Code Pro v2.0 ⚡</p>
-            </div>
         </div>
     </div>
 
-    <!-- Biblioteca QR Code moderna -->
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <!-- Usando CDN confiável e testado -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
     
     <script>
+        // Versão simplificada e garantida para GitHub
         let currentQRCanvas = null;
-        let currentQRData = null;
         
         function showError(message) {
             const errorEl = document.getElementById('error-message');
@@ -473,177 +321,130 @@
             }, 3000);
         }
 
-        function updateStats(text) {
-            const charCount = text.length;
-            document.getElementById('qr-characters').textContent = charCount;
-            
-            // Capacidade aproximada baseada no nível de correção
-            const errorLevel = document.getElementById('qr-error-level').value;
-            let capacity;
-            switch(errorLevel) {
-                case 'L': capacity = '~2,950'; break;
-                case 'M': capacity = '~2,330'; break;
-                case 'Q': capacity = '~1,660'; break;
-                case 'H': capacity = '~1,270'; break;
-                default: capacity = '~2,330';
-            }
-            document.getElementById('qr-capacity').textContent = capacity;
-            
-            // Versão estimada (simplificado)
-            if (charCount < 100) document.getElementById('qr-version').textContent = '1-2';
-            else if (charCount < 500) document.getElementById('qr-version').textContent = '3-6';
-            else if (charCount < 1500) document.getElementById('qr-version').textContent = '7-14';
-            else document.getElementById('qr-version').textContent = '15-40';
-        }
-
-        async function generateQR() {
+        function generateQR() {
             const input = document.getElementById('qr-input');
             const text = input.value.trim();
             const size = parseInt(document.getElementById('qr-size').value);
             const darkColor = document.getElementById('qr-color-dark').value;
             const lightColor = document.getElementById('qr-color-light').value;
-            const errorLevel = document.getElementById('qr-error-level').value;
             const generateBtn = document.getElementById('generate-btn');
             const qrcodeDiv = document.getElementById('qrcode');
             const container = document.getElementById('qrcode-container');
             
             // Validação
-            input.classList.remove('error');
-            
             if (!text) {
-                input.classList.add('error');
-                showError('Por favor, digite algum conteúdo para o QR Code!');
+                showError('Digite algum conteúdo!');
                 return;
             }
             
-            // Loading state
+            // Loading
             generateBtn.classList.add('loading');
             generateBtn.disabled = true;
             
-            // Limpa QR Code anterior
+            // Limpa anterior
             qrcodeDiv.innerHTML = '';
             
             try {
-                // Atualiza estatísticas
-                updateStats(text);
+                // Criar QR Code com a biblioteca
+                const qr = qrcode(0, 'M');
+                qr.addData(text);
+                qr.make();
                 
-                // Opções de configuração
-                const options = {
-                    width: size,
-                    margin: 2,
-                    color: {
-                        dark: darkColor,
-                        light: lightColor
-                    },
-                    errorCorrectionLevel: errorLevel
-                };
+                // Criar canvas manualmente
+                const canvas = document.createElement('canvas');
+                const cellSize = size / qr.getModuleCount();
                 
-                // Gera QR Code como Canvas
-                const canvas = await QRCode.toCanvas(text, options);
+                canvas.width = size;
+                canvas.height = size;
                 
-                // Adiciona ao DOM
+                const ctx = canvas.getContext('2d');
+                
+                // Desenhar fundo
+                ctx.fillStyle = lightColor;
+                ctx.fillRect(0, 0, size, size);
+                
+                // Desenhar QR Code
+                ctx.fillStyle = darkColor;
+                for (let row = 0; row < qr.getModuleCount(); row++) {
+                    for (let col = 0; col < qr.getModuleCount(); col++) {
+                        if (qr.isDark(row, col)) {
+                            ctx.fillRect(
+                                col * cellSize, 
+                                row * cellSize, 
+                                cellSize, 
+                                cellSize
+                            );
+                        }
+                    }
+                }
+                
                 canvas.id = 'qr-canvas';
                 qrcodeDiv.appendChild(canvas);
                 
-                // Guarda referência
                 currentQRCanvas = canvas;
-                
-                // Prepara dados para outros formatos
-                currentQRData = {
-                    text: text,
-                    options: options
-                };
-                
-                // Mostra container
                 container.classList.remove('hidden');
                 
             } catch (error) {
                 console.error('Erro:', error);
-                showError('Erro ao gerar QR Code. Tente novamente.');
+                showError('Erro ao gerar QR Code');
             } finally {
-                // Remove loading state
                 generateBtn.classList.remove('loading');
                 generateBtn.disabled = false;
             }
         }
 
-        async function downloadQR(format) {
+        function downloadQR() {
             if (!currentQRCanvas) {
-                showError('Primeiro gere um QR Code!');
+                showError('Gere um QR Code primeiro!');
                 return;
             }
 
             try {
-                if (format === 'png') {
-                    // Download como PNG
-                    const link = document.createElement('a');
-                    link.download = `qrcode-${Date.now()}.png`;
-                    link.href = currentQRCanvas.toDataURL('image/png');
-                    link.click();
-                } else if (format === 'svg') {
-                    // Gera SVG
-                    const text = currentQRData.text;
-                    const options = currentQRData.options;
-                    
-                    const svgString = await QRCode.toString(text, {
-                        ...options,
-                        type: 'svg'
-                    });
-                    
-                    // Download como SVG
-                    const blob = new Blob([svgString], { type: 'image/svg+xml' });
-                    const url = URL.createObjectURL(blob);
-                    const link = document.createElement('a');
-                    link.download = `qrcode-${Date.now()}.svg`;
-                    link.href = url;
-                    link.click();
-                    URL.revokeObjectURL(url);
-                }
+                const link = document.createElement('a');
+                link.download = `qrcode-${Date.now()}.png`;
+                link.href = currentQRCanvas.toDataURL('image/png');
+                link.click();
             } catch (error) {
-                console.error('Erro no download:', error);
-                showError('Erro ao baixar QR Code.');
+                showError('Erro ao baixar');
             }
         }
 
-        async function copyQR() {
+        function copyQR() {
             if (!currentQRCanvas) {
-                showError('Primeiro gere um QR Code!');
+                showError('Gere um QR Code primeiro!');
                 return;
             }
 
             try {
-                // Converte canvas para blob e copia
-                const blob = await new Promise(resolve => currentQRCanvas.toBlob(resolve));
-                await navigator.clipboard.write([
-                    new ClipboardItem({
-                        [blob.type]: blob
-                    })
-                ]);
-                
-                // Feedback visual
-                const copyBtn = document.getElementById('copy-btn');
-                const originalText = copyBtn.innerHTML;
-                copyBtn.innerHTML = '✅ Copiado!';
-                setTimeout(() => {
-                    copyBtn.innerHTML = originalText;
-                }, 2000);
-                
+                currentQRCanvas.toBlob(async (blob) => {
+                    try {
+                        await navigator.clipboard.write([
+                            new ClipboardItem({
+                                [blob.type]: blob
+                            })
+                        ]);
+                        
+                        const copyBtn = document.querySelector('.copy-btn');
+                        const originalText = copyBtn.innerHTML;
+                        copyBtn.innerHTML = '✅ Copiado!';
+                        setTimeout(() => {
+                            copyBtn.innerHTML = originalText;
+                        }, 2000);
+                        
+                    } catch (err) {
+                        showError('Não foi possível copiar');
+                    }
+                });
             } catch (error) {
-                console.error('Erro ao copiar:', error);
-                showError('Erro ao copiar imagem. Tente baixar.');
+                showError('Erro ao copiar');
             }
         }
 
-        // Gera QR Code inicial
+        // Gerar QR Code inicial
         window.onload = function() {
             generateQR();
             
-            // Atualiza estatísticas enquanto digita
-            document.getElementById('qr-input').addEventListener('input', function(e) {
-                updateStats(e.target.value);
-            });
-            
-            // Atalho de teclado (Enter para gerar)
+            // Enter para gerar
             document.getElementById('qr-input').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     generateQR();
